@@ -1,11 +1,11 @@
-import { Module, forwardRef } from '@nestjs/common';
-import { UserController } from './user.controller';
+import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
+import { UserController } from './user.controller';
+import { SupabaseModule } from '../supabase/supabase.module';
 
 @Module({
-    imports: [],
-    controllers: [UserController],
-    providers: [UserService],
-    exports: [UserService],
+  imports: [SupabaseModule],
+  providers: [UserService],
+  controllers: [UserController],
 })
-export class UserModule { }
+export class UserModule {}
