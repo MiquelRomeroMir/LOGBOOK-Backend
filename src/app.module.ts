@@ -7,11 +7,11 @@ import { UserModule } from './User/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Acceso global a variables de entorno
+      isGlobal: true,
     }),
-    UserModule, // Importa UserModule, no los controladores ni servicios directamente
+    UserModule, 
   ],
-  controllers: [AppController], // Solo AppController
+  controllers: [AppController], 
   providers: [AppService],
 })
 export class AppModule {}
