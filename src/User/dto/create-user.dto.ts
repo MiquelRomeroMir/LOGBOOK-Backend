@@ -20,7 +20,7 @@ export class CreateUserDto {
   @MinLength(6)
   @ApiProperty({
     description: 'Password for the user, minimum 6 characters',
-    example: 'strongPassword123',
+    default: 'strongPassword123',
   })
   password: string;
 
@@ -28,7 +28,7 @@ export class CreateUserDto {
   @IsInt()
   @ApiProperty({
     description: 'Optional ID of the business the user belongs to',
-    example: 1,
+    default: 1,
     required: false,
   })
   business_id?: number;
