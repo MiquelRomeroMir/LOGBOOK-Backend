@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, MinLength, IsOptional, IsInt } from 'class-validator';
+import { IsString, IsEmail, MinLength, IsOptional, IsInt, IsUrl } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -32,4 +32,13 @@ export class CreateUserDto {
     required: false,
   })
   business_id?: number;
+
+  @IsOptional()
+  @IsUrl()
+  @ApiProperty({
+    description: 'Optional avatar URL for the user. Defaults to the generic profile image if not provided.',
+    default: 'https://altvolzamkcqwmsmxvxk.supabase.co/storage/v1/object/public/user_avatars/profile-vector.jpg',
+    required: false,
+  })
+  avatarUrl?: string;
 }
