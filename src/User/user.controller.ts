@@ -4,6 +4,7 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -13,6 +14,7 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @ApiBearerAuth()
 @ApiTags('User')
@@ -32,7 +34,7 @@ export class UserController {
     return true;
   }
 
-  @Post('/1.0/create')
+   @Post('/1.0/create')
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({ status: 201, description: 'User created successfully' })
   @UsePipes(
@@ -42,6 +44,25 @@ export class UserController {
     }),
   )
   async createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
+    try {
+      
+      const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+      const user = await this.userService.createUser({
+        ...createUserDto,
+        password: hashedPassword,
+      });
+
+      
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatarUrl: user.avatarUrl,
+        business_id: user.business?.business_id || null,
+      };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

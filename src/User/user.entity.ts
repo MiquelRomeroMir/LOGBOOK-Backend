@@ -16,10 +16,12 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
   password: string;
 
+  @Column({ type: 'varchar', length: 500, nullable: true,default: 'https://altvolzamkcqwmsmxvxk.supabase.co/storage/v1/object/public/user_avatars/profile-vector.jpg'  })
+  avatarUrl?: string;
+
   @ManyToOne(() => Business, business => business.users, { eager: false, nullable: true })
 @JoinColumn({ name: 'business_id' })
 business?: Business;
-
 
 
   @OneToMany(() => Reservation, reservation => reservation.user)
