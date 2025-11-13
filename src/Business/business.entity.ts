@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../User/user.entity';
 import { Reservation } from '../Reservation/reservation.entity';
+import { Category } from '../Category/category.entity';
 
 @Entity({ name: 'business' })
 export class Business extends BaseEntity {
@@ -12,6 +13,10 @@ export class Business extends BaseEntity {
 
   @Column({ type: 'text', nullable: true })
   description?: string;
+
+  @ManyToOne(() => Category, (category) => category.businesses, { eager: true, nullable: true })
+  @JoinColumn({ name: 'category_id' })
+  category?: Category;
 
   @OneToMany(() => User, user => user.business, { eager: false })
   users: User[];
