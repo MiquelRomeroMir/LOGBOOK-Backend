@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from '../User/user.entity';
+import { Profile } from '../Profile/profile.entity';
 import { Reservation } from '../Reservation/reservation.entity';
 import { Category } from '../Category/category.entity';
 import { Service } from '../Service/service.entity';
@@ -19,7 +19,7 @@ export class Business extends BaseEntity {
   @JoinColumn({ name: 'category_id' })
   category?: Category;
 
-  @OneToMany(() => Reservation, reservation => reservation.business, { eager: false })
+  @OneToMany(() => Reservation, reservation => reservation.business_id, { eager: false })
   reservations: Reservation[];
 
   @OneToMany(() => Service, (service) => service.business, { eager: false })

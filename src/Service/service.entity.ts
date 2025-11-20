@@ -23,7 +23,7 @@ export class Service extends BaseEntity {
   @JoinColumn({ name: 'business_id' })
   business: Business;
 
-  @OneToMany(() => Reservation, (reservation) => reservation.service, { eager: false })
+  @OneToMany(() => Reservation, (reservation) => reservation.service_id, { eager: false })
   reservations: Reservation[];
 }
 

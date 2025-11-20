@@ -11,7 +11,7 @@ export class ReservationService {
   async create(dto: CreateReservationDto) {
     const { data, error } = await this.supabase
       .from('reservation')
-      .insert([dto]) // user_id, business_id, reservation_date
+      .insert([dto])
       .select();
 
     if (error) {
