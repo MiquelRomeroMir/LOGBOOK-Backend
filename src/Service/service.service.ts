@@ -1,18 +1,18 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { CreateBusinessDto } from '../Business/dto/create-business.dto';
+import { CreateServiceDto } from './dto/create-service.dto';
 
 @Injectable()
-export class BusinessService {
+export class ServiceService {
   constructor(
     @Inject('SUPABASE_CLIENT') private readonly supabase: SupabaseClient
   ) {}
 
-  async create(dto: CreateBusinessDto) {
+  async create(dto: CreateServiceDto) {
     const { data, error } = await this.supabase
-      .from('business')
+      .from('service')
       .insert([dto])
-      .select(); 
+      .select();
 
     if (error) throw new Error(error.message);
     return data;

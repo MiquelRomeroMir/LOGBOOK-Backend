@@ -23,4 +23,10 @@ export class Business extends BaseEntity {
 
   @OneToMany(() => Reservation, reservation => reservation.business, { eager: false })
   reservations: Reservation[];
+
+  @OneToMany(() => Object, service => (service as any).business)
+  services: any[];
+
+   @Column("text", { array: true, nullable: true })
+  images?: string[];
 }
