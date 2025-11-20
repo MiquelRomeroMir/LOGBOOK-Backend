@@ -14,13 +14,12 @@ export class UserService {
       'https://altvolzamkcqwmsmxvxk.supabase.co/storage/v1/object/public/user_avatars/profile-vector.jpg';
     
     const { data, error } = await this.supabase
-      .from('users')
+      .from('user')
       .insert([
         {
           name: createUserDto.name,
           email: createUserDto.email,
           password: createUserDto.password,
-          business_id: createUserDto.business_id,
           avatarUrl,
         },
       ])

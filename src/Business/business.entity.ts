@@ -19,9 +19,6 @@ export class Business extends BaseEntity {
   @JoinColumn({ name: 'category_id' })
   category?: Category;
 
-  @OneToMany(() => User, user => user.business, { eager: false })
-  users: User[];
-
   @OneToMany(() => Reservation, reservation => reservation.business, { eager: false })
   reservations: Reservation[];
 
