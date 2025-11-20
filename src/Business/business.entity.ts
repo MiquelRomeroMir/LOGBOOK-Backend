@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, ManyToOn
 import { User } from '../User/user.entity';
 import { Reservation } from '../Reservation/reservation.entity';
 import { Category } from '../Category/category.entity';
+import { Service } from '../Service/service.entity';
 
 @Entity({ name: 'business' })
 export class Business extends BaseEntity {
@@ -24,8 +25,8 @@ export class Business extends BaseEntity {
   @OneToMany(() => Reservation, reservation => reservation.business, { eager: false })
   reservations: Reservation[];
 
-  @OneToMany(() => Object, service => (service as any).business)
-  services: any[];
+  @OneToMany(() => Service, (service) => service.business, { eager: false })
+  services: Service[];
 
    @Column("text", { array: true, nullable: true })
   images?: string[];
