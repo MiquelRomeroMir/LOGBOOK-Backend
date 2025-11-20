@@ -5,6 +5,9 @@ import {
   UsePipes,
   ValidationPipe,
   BadRequestException,
+  Param,
+  Get,
+  ParseIntPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -60,6 +63,22 @@ export class UserController {
         email: user.email,
         avatarUrl: user.avatarUrl,
       };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  // 🔹 GET /users/:id/reservations
+  @Get(':id/reservations')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Obtenir totes les reserves d’un usuari' })
+  @ApiResponse({ status: 200, description: 'Llista de reserves retornada correctament' })
+  async getUserReservations(
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    try {
+      const reservations = await this.userService.getUserReservations(id);
+      return reservations;
     } catch (error) {
       throw new BadRequestException(error.message);
     }
