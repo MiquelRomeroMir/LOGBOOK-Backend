@@ -30,4 +30,37 @@ export class UserService {
 
     return data as User;
   }
+
+  async getUserReservations(userId: number) {
+    const { data, error } = await this.supabase
+      .from('reservation')
+      .select(
+        `
+        reservation_id,
+        reservation_date,
+        business:business_id (
+          business_id,
+          name,
+          images
+        )
+      `,
+      )
+      .eq('user_id', userId)
+      .order('reservation_date', { ascending: true });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return (data ?? []).map((reservation: any) => ({
+    reservation_id: reservation.reservation_id,
+    reservation_date: reservation.reservation_date,
+    business_id: reservation.business?.business_id,
+    business_name: reservation.business?.name,
+    business_image:
+      reservation.business?.images && reservation.business.images.length > 0
+        ? reservation.business.images[0]
+        : null,
+  }));
+  }
 }
