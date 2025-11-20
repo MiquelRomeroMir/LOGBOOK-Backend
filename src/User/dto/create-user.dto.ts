@@ -25,15 +25,6 @@ export class CreateUserDto {
   password: string;
 
   @IsOptional()
-  @IsInt()
-  @ApiProperty({
-    description: 'Optional ID of the business the user belongs to',
-    default: 1,
-    required: false,
-  })
-  business_id?: number;
-
-  @IsOptional()
   @IsUrl()
   @ApiProperty({
     description: 'Optional avatar URL for the user. Defaults to the generic profile image if not provided.',

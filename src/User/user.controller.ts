@@ -59,7 +59,6 @@ export class UserController {
         name: user.name,
         email: user.email,
         avatarUrl: user.avatarUrl,
-        business_id: user.business?.business_id || null,
       };
     } catch (error) {
       throw new BadRequestException(error.message);
