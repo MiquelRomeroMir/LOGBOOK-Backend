@@ -20,4 +20,22 @@ export class ReservationService {
 
     return data;
   }
+
+  async cancel(reservationId: number) {
+    const { data, error } = await this.supabase
+      .from('reservation')
+      .delete()
+      .eq('reservation_id', reservationId)
+      .select();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // data és l'array de files eliminades
+    return {
+      message: 'Reserva anul·lada correctament',
+      deleted: data,
+    };
+  }
 }
