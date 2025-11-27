@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Delete, Param, ParseIntPipe } from '@nestjs/common';
 import { ReservationService } from './reservation.service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 
@@ -9,5 +9,10 @@ export class ReservationController {
   @Post()
   async create(@Body() dto: CreateReservationDto) {
     return this.reservationService.create(dto);
+  }
+
+  @Delete(':id')
+  async cancel(@Param('id', ParseIntPipe) id: number) {
+    return this.reservationService.cancel(id);
   }
 }
