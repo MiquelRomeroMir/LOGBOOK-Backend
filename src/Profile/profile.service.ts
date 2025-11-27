@@ -37,7 +37,7 @@ export class ProfileService {
       return profile;
     }
 
-  async getProfileReservations(ProfileId: string) {
+  async getProfileReservations(user_id: string) {
     const { data, error } = await this.supabase
       .from('reservation')
       .select(
@@ -51,7 +51,7 @@ export class ProfileService {
         )
       `,
       )
-      .eq('Profile_id', ProfileId)
+      .eq('user_id', user_id)
       .order('reservation_date', { ascending: true });
 
     if (error) {
