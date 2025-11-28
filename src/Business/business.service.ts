@@ -17,4 +17,15 @@ export class BusinessService {
     if (error) throw new Error(error.message);
     return data;
   }
+  async getRandom(limit = 5) {
+    const { data, error } = await this.supabase
+      .from('business')
+      .select('*')
+      .order('business_id', { ascending: false }); // primer ordenes per id, opcional
+    if (error) throw new Error(error.message);
+
+    // Escollir 5 aleatoris
+    const shuffled = data.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, limit);
+  }
 }

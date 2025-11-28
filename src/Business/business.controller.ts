@@ -10,4 +10,9 @@ export class BusinessController {
   async create(@Body() dto: CreateBusinessDto) {
     return this.businessService.create(dto);
   }
+
+  @Get('random')
+  async getRandom() {
+    return this.businessService.getRandom();
+  }
 }

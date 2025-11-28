@@ -10,4 +10,9 @@ export class ServiceController {
   async create(@Body() dto: CreateServiceDto) {
     return this.serviceService.create(dto);
   }
+
+  @Get('business/:businessId')
+  async getByBusiness(@Param('businessId') businessId: string) {
+    return this.serviceService.getByBusiness(Number(businessId));
+  }
 }
