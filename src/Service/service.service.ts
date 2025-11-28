@@ -17,4 +17,14 @@ export class ServiceService {
     if (error) throw new Error(error.message);
     return data;
   }
+
+  async getByBusiness(businessId: number) {
+    const { data, error } = await this.supabase
+      .from('service')
+      .select('*')
+      .eq('business_id', businessId);
+
+    if (error) throw new Error(error.message);
+    return data;
+  }
 }
