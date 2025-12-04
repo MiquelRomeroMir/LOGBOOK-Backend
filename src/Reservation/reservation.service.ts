@@ -90,4 +90,52 @@ export class ReservationService {
       deleted: data,
     };
   }
+
+  async addReview(reservationId: number, review: number) {
+    // Validem el rang
+    if (!Number.isInteger(review) || review < 0 || review > 10) {
+      throw new BadRequestException('La review ha de ser un enter entre 0 i 10');
+    }
+
+    // 1. Comprovem que la reserva existeix i ha passat
+    const { data: reservation, error: reservationError } = await this.supabase
+      .from('reservation')
+      .select('reservation_date')
+      .eq('reservation_id', reservationId)
+      .single();
+
+    if (reservationError) {
+      if (
+        reservationError.code === 'PGRST116' ||
+        reservationError.message?.includes('Row not found')
+      ) {
+        throw new BadRequestException('Reserva no trobada');
+      }
+      throw new Error(reservationError.message);
+    }
+
+    const now = new Date();
+    const reservationDate = new Date(reservation.reservation_date);
+
+    if (reservationDate > now) {
+      throw new BadRequestException(
+        'Encara no pots valorar una reserva que encara no ha passat',
+      );
+    }
+
+    // 2. Guardem la review
+    const { data, error } = await this.supabase
+      .from('reservation')
+      .update({ review })
+      .eq('reservation_id', reservationId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
 }
