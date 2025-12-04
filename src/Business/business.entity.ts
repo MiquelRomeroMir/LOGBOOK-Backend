@@ -27,4 +27,13 @@ export class Business extends BaseEntity {
 
    @Column("text", { array: true, nullable: true })
   images?: string[];
+
+  @Column({ type: 'text', nullable: true })
+  address?: string;
+
+  @Column({ type: 'double precision', nullable: true })
+  latitude?: number;
+
+  @Column({ type: 'double precision', nullable: true })
+  longitude?: number;
 }
