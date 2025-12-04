@@ -7,6 +7,7 @@ import { CategoryModule } from './Category/category.module';
 import { BusinessModule } from './Business/business.module';
 import { ServiceModule } from './Service/service.module';
 import { ReservationModule } from './Reservation/reservation.module';
+import { SearchModule } from './Search/search.module';
 
 @Module({
   imports: [
@@ -15,11 +16,12 @@ import { ReservationModule } from './Reservation/reservation.module';
     }),
     ProfileModule,
     CategoryModule,
-    BusinessModule, 
+    BusinessModule,
     ServiceModule,
     ReservationModule,
+    SearchModule,
   ],
-  controllers: [AppController], 
+  controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
