@@ -45,4 +45,49 @@ export class BusinessService {
 
     return data;
   }
+
+  async getReviewStats(id: number) {
+    // Agafem totes les reviews de les reserves d'aquest business
+    const { data, error } = await this.supabase
+      .from('reservation')
+      .select('review')
+      .eq('business_id', id);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    // Si no hi ha cap reserva → 0 i 0
+    if (!data || data.length === 0) {
+      return {
+        business_id: id,
+        avg_review: 0,
+        review_count: 0,
+      };
+    }
+
+    // Ens quedem només amb les reviews numèriques (0–10)
+    const reviews = data
+      .map((row: { review: number | null }) => row.review)
+      .filter((r): r is number => typeof r === 'number');
+
+    if (reviews.length === 0) {
+      return {
+        business_id: id,
+        avg_review: 0,
+        review_count: 0,
+      };
+    }
+
+    const sum = reviews.reduce((acc, r) => acc + r, 0);
+    const avg = sum / reviews.length;
+
+    return {
+      business_id: id,
+      avg_review: avg,
+      review_count: reviews.length,
+    };
+  }
+
+
 }

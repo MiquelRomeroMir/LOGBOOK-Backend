@@ -16,6 +16,11 @@ export class BusinessController {
     return this.businessService.getRandom();
   }
 
+  @Get(':id/review-stats')
+  async getReviewStats(@Param('id', ParseIntPipe) id: number) {
+    return this.businessService.getReviewStats(id);
+  }
+
   @Get(':id')
   async getById(@Param('id', ParseIntPipe) id: number) {
     return this.businessService.getById(id);

@@ -44,6 +44,7 @@ export class ProfileService {
         `
         reservation_id,
         reservation_date,
+        review,
         business:business_id (
           business_id,
           name,
@@ -59,14 +60,19 @@ export class ProfileService {
     }
 
     return (data ?? []).map((reservation: any) => ({
-    reservation_id: reservation.reservation_id,
-    reservation_date: reservation.reservation_date,
-    business_id: reservation.business?.business_id,
-    business_name: reservation.business?.name,
-    business_image:
-      reservation.business?.images && reservation.business.images.length > 0
-        ? reservation.business.images[0]
-        : null,
-  }));
+      reservation_id: reservation.reservation_id,
+      reservation_date: reservation.reservation_date,
+      review:
+        typeof reservation.review === 'number' && !isNaN(reservation.review)
+          ? reservation.review
+          : null,
+      business_id: reservation.business?.business_id,
+      business_name: reservation.business?.name,
+      business_image:
+        reservation.business?.images && reservation.business.images.length > 0
+          ? reservation.business.images[0]
+          : null,
+    }));
   }
+
 }

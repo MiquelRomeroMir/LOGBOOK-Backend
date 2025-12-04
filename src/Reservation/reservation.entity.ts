@@ -22,6 +22,9 @@ export class Reservation extends BaseEntity {
   @Column({ type: 'timestamp with time zone' })
   reservation_date: Date;
 
+  @Column({ type: 'smallint', nullable: true })
+  review?: number;
+
   @ManyToOne(() => Profile, (profile) => profile.reservations, {
     onDelete: 'CASCADE',
   })
